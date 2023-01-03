@@ -1,32 +1,50 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import styles from './App.module.css'
+import poweredImage from './assets/powered.png'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [heightField, setHeightField] = useState<number>(0)
+  const [weightField, setWeightField] = useState<number>(0)
+
+  const handleCalculateButton = () => {
+    if (heightField && weightField) {
+
+    } else {
+      alert('Enter all fields')
+    }
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className={styles.main}>
+      <header>
+        <div className={styles.headerContainer}>
+          <img src={poweredImage} width={150} />
+        </div>
+      </header>
+      <div className={styles.container}>
+        <div className={styles.leftSide}>
+          <h1>Calculate your BMI</h1>
+          <p>Body mass index (BMI) is a value derived from the mass (weight) and height of a person. The BMI is defined as the body mass divided by the square of the body height, and is expressed in units of kg/m2, resulting from mass in kilograms and height in metres.</p>
+
+          <input 
+            type='number' 
+            placeholder='Enter your height in meters.'
+            value={heightField > 0 ? heightField : ''}
+            onChange={e => setHeightField(parseFloat(e.target.value))}
+          />
+          <input 
+            type='number' 
+            placeholder='Enter your weight in kilograms.'
+            value={weightField > 0 ? weightField : ''}
+            onChange={e => setWeightField(parseFloat(e.target.value))}
+          />
+
+          <button onClick={handleCalculateButton}>Calculate</button>
+        </div>
+        <div className={styles.rightSide}>
+          right
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
