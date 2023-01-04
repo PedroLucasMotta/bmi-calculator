@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styles from './App.module.css'
 import poweredImage from './assets/powered.png'
+import leftArrowImage from './assets/leftarrow.png'
 import { GridItem } from './components/GridItem'
 
 import { levels, calculateBMI, Level } from "./helpers/imc";
@@ -16,6 +17,12 @@ const App = () => {
     } else {
       alert('Enter all fields')
     }
+  }
+
+  const handleBackButton = () => {
+    setToShow(null)
+    setHeightField(0)
+    setWeightField(0)
   }
 
   return (
@@ -35,15 +42,21 @@ const App = () => {
             placeholder='Enter your height in meters.'
             value={heightField > 0 ? heightField : ''}
             onChange={e => setHeightField(parseFloat(e.target.value))}
+            disabled={toShow ? true : false}
           />
           <input 
             type='number' 
             placeholder='Enter your weight in kilograms.'
             value={weightField > 0 ? weightField : ''}
             onChange={e => setWeightField(parseFloat(e.target.value))}
+            disabled={toShow ? true : false}
           />
 
-          <button onClick={handleCalculateButton}>Calculate</button>
+          <button 
+            onClick={handleCalculateButton} 
+            disabled={toShow ? true : false}>
+            Calculate
+          </button>
         </div>
         <div className={styles.rightSide}>
           {!toShow &&
@@ -55,7 +68,9 @@ const App = () => {
           }
           {toShow &&
             <div className={styles.rightBig}>
-              <div className={styles.rightArrow}></div>
+              <div className={styles.rightArrow} onClick={handleBackButton}>
+                <img src={leftArrowImage} width={25} />
+              </div>
               <GridItem item={toShow} />
             </div>
           }
